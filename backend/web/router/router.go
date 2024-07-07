@@ -38,8 +38,6 @@ func (r *Router) setMiddleware() {
 func (r *Router) cors() {
 	r.Engine.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
-			"https://doer-glyph.net",
-			"https://www.doer-glyph.net",
 			"http://localhost:3000",
 		},
 		AllowMethods: []string{
