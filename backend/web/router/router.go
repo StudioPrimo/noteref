@@ -55,7 +55,6 @@ func (r *Router) cors() {
 			"Content-Length",
 			"Accept-Encoding",
 			"Authorization",
-			"jwt",
 		},
 		AllowCredentials: true,
 		MaxAge:           24 * time.Hour,
