@@ -1,11 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:google/recommended"
-  ],
-  "plugins": [
-    "google"
-  ],
+  "extends": ["eslint:recommended", "google"],
   "rules": {
   }
 }
