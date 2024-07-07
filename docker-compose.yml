@@ -15,18 +15,17 @@ services:
       - db
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: noteref-dev
     ports:
-      - "8080:8080"
-    volumes:
-      - ./backend:/app
-    working_dir: /app
-    environment:
-      - DB_USER=primo
-      - DB_PASSWORD=primo
-      - DB_HOST=db
-      - DB_NAME=mydb
+      - 8080:8080
     tty: true
+    depends_on:
+      - db
+    volumes:
+      - ./server:/go/src/github.com/StudioPrimo/noteref
 
   db:
     image: mysql:8.0

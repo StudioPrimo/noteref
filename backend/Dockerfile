@@ -1,4 +1,5 @@
-FROM golang:1.22
+# Build stage
+FROM golang:1.22 AS builder
 
 WORKDIR /go/src/github.com/StudioPrimo/noteref
 
