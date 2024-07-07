@@ -5,7 +5,8 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
-    working_dir: /app
+    working_dir: /app/src
+    command: npm install && npm build
     environment:
       - CHOKIDAR_USEPOLLING=true
     tty: true
