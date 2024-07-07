@@ -1,0 +1,16 @@
+# .air.toml example
+[build]
+  cmd = "go build -o /docker-gs-ping"
+  bin = "/docker-gs-ping"
+  full_bin = "go run main.go"
+  log = "air_errors.log"
+
+[dev]
+  address = "localhost:8080"
+  watch_dirs = ["."]
+  ignore_dirs = ["vendor", "node_modules"]
+
+[log]
+  color = true
+  level = "debug"
+  file = "/var/log/air.log"
