@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-=RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/cosmtrek/air@latest
 
 EXPOSE 8080
 
