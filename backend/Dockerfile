@@ -1,7 +1,7 @@
 ## Build
 FROM golang:1.22-buster AS build
 
-WORKDIR /go/src/github.com/Doer-org/glyph
+WORKDIR /go/src/github.com/StudioPrimo/noteref
 
 COPY go.mod ./
 COPY go.sum ./
