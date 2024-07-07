@@ -1,7 +1,6 @@
-# Build stage
-FROM golang:1.22-buster AS build
+FROM golang:1.22
 
-WORKDIR /go/src/github.com/Doer-org/glyph
+WORKDIR /go/src/github.com/StudioPrimo/noteref
 
 COPY go.mod ./
 COPY go.sum ./
@@ -10,16 +9,12 @@ RUN go mod download
 
 COPY . .
 
-# Install air for hot-reloading
-RUN go install github.com/cosmtrek/air@latest
+=RUN go install github.com/cosmtrek/air@latest
 
-# Expose necessary port
 EXPOSE 8080
 
-# Command to start air
 CMD ["air", "-c", ".air.toml"]
 
-# Deploy stage
 FROM gcr.io/distroless/base-debian10
 
 WORKDIR /
@@ -28,7 +23,7 @@ COPY --from=build /go/src/github.com/StudioPrimo/noteref /noteref
 
 COPY --from=build /go/bin/air /usr/local/bin/air
 
-WORKDIR /glyph
+WORKDIR /noteref
 
 EXPOSE 8080
 

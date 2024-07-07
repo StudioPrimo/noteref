@@ -1,5 +1,4 @@
-## Build
-FROM golang:1.22-buster AS build
+FROM golang:1.22
 
 WORKDIR /go/src/github.com/StudioPrimo/noteref
 
