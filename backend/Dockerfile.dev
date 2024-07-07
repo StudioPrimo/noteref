@@ -1,32 +1,14 @@
-FROM golang:1.22 AS build
 
-WORKDIR /go/src/github.com/StudioPrimo/noteref
+FROM golang:1.22.4-alpine
 
-COPY go.mod ./
-COPY go.sum ./
+RUN apk update && apk add git
 
-RUN go mod download
-
+WORKDIR /go/src/StudioPrimo/noteref
 COPY . .
 
-RUN go install github.com/cosmtrek/air@latest
-
 EXPOSE 8080
 
-CMD ["air", "-c", ".air.toml"]
+RUN go install github.com/air-verse/air@latest
+RUN go mod download
 
-FROM gcr.io/distroless/base-debian10
-
-WORKDIR /
-
-COPY --from=build /go/src/github.com/StudioPrimo/noteref /noteref
-
-COPY --from=build /go/bin/air /usr/local/bin/air
-
-WORKDIR /noteref
-
-EXPOSE 8080
-
-USER nonroot:nonroot
-
-ENTRYPOINT ["air", "-c", ".air.toml"]
+CMD [ "air", "-c", ".air.toml" ]
