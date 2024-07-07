@@ -17,7 +17,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
       - ./backend:/app
     working_dir: /app
