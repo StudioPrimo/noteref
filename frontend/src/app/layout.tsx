@@ -5,6 +5,7 @@ import './globals.css';
 import { Providers } from './provider';
 import NextHead from 'next/head';
 import { siteConfig } from '@/config/site';
+import Navbar from '@/components/layout/navbar';
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] });
@@ -34,7 +35,12 @@ export default function RootLayout({
         <link href="/favicon.ico" rel="icon" />
       </NextHead>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="w-screen h-screen">
+            <Navbar />
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );
