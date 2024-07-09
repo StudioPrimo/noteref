@@ -37,30 +37,32 @@ export default function RootLayout({
       </NextHead>
       <body className={inter.className}>
         <Providers>
-          <Grid
-            gridTemplateAreas={`"header header"
+          <div className="w-screen h-screen">
+            <Grid
+              gridTemplateAreas={`"header header"
                   "nav main"
                   "nav footer"`}
-            gridTemplateRows={'100px 1fr 30px'}
-            gridTemplateColumns={'60px 1fr'}
-            gap="1"
-            color="blackAlpha.700"
-            fontWeight="bold"
-            className="h-screen w-screen"
-          >
-            <GridItem pl="2" bg="orange.300" area={'header'}>
-              Header
-            </GridItem>
-            <GridItem pl="2" bg="pink.300" area={'nav'}>
-              Nav
-            </GridItem>
-            <GridItem pl="2" bg="green.300" area={'main'}>
-              {children}
-            </GridItem>
-            <GridItem pl="2" bg="blue.300" area={'footer'}>
-              Footer
-            </GridItem>
-          </Grid>
+              gridTemplateRows={'10vh 1fr 5vh'}
+              gridTemplateColumns={'20vh 1fr'}
+              gap="1"
+              color="blackAlpha.700"
+              fontWeight="bold"
+              height={'100vh'}
+            >
+              <GridItem pl="2" bg="orange.300" area={'header'}>
+                Header
+              </GridItem>
+              <GridItem pl="2" bg="pink.300" area={'nav'}>
+                Nav
+              </GridItem>
+              <GridItem pl="2" bg="green.300" area={'main'}>
+                {children}
+              </GridItem>
+              <GridItem pl="2" bg="blue.300" area={'footer'}>
+                Footer
+              </GridItem>
+            </Grid>
+          </div>
         </Providers>
       </body>
     </html>
