@@ -1,0 +1,15 @@
+services:
+  backend:
+    container_name: noteref-backend
+    restart: always
+    tty: true
+
+  database:
+    container_name: noteref-database
+    restart: always
+    tty: true
+
+  frontend:
+    container_name: noteref-frontend
+    restart: always
+    tty: true

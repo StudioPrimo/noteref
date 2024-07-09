@@ -1,0 +1,27 @@
+name: Build Test of Makefile
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: set up server
+      run: make up
+
+    - name: docker ps
+      run: docker ps
+
+    - name: down server
+      run: make down
+
+    - name: set up server
+      run: make re
+  
