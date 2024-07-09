@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site';
 import { Providers } from './provider';
 import { fonts } from './fonts';
 import { Grid, GridItem } from '@chakra-ui/react';
+import Header from '@/components/ui/header';
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] });
@@ -50,7 +51,7 @@ export default function RootLayout({
               height={'100vh'}
             >
               <GridItem pl="2" bg="orange.300" area={'header'}>
-                Header
+                <Header />
               </GridItem>
               <GridItem pl="2" bg="pink.300" area={'nav'}>
                 Nav
