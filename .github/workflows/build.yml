@@ -21,7 +21,7 @@ jobs:
       with:
         url: http://localhost:8080/health
 
-    -name: down server
+    - name: down server
       run: make down
 
     - name: set up server
