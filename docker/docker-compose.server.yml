@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:8080
+    tty: true
+    depends_on:
+      - database
+    volumes:
+      - ../backend:/go/src/github.com/StudioPrimo/noteref
+    environment:
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PORT=${DB_PORT}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - PORT=${PORT}
