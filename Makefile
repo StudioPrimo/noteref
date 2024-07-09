@@ -67,3 +67,11 @@ b:
 .PHONY: backend-test
 backend-test:
 	docker compose exec backend go test ./...
+
+.PHONY: up-build
+up-build:
+	$(ENV_LOCAL) docker compose \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
+	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d --build
