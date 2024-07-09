@@ -24,7 +24,7 @@ RM:=rm -rf
 
 .PHONY: up
 up: ## docker環境を立ち上げる
-	$(ENV_LOCAL) docker-compose \
+	$(ENV_LOCAL) docker compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
@@ -32,7 +32,7 @@ up: ## docker環境を立ち上げる
 
 .PHONY: down
 down: ## dockerイメージを削除し、docker環境を閉じる
-	docker-compose \
+	docker compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
