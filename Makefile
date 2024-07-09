@@ -28,7 +28,7 @@ up: ## docker環境を立ち上げる
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d
 
 .PHONY: down
 down: ## dockerイメージを削除し、docker環境を閉じる
