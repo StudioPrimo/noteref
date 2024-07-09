@@ -8,6 +8,7 @@ import { Providers } from './provider';
 import { fonts } from './fonts';
 import { Grid, GridItem } from '@chakra-ui/react';
 import Header from '@/components/ui/header';
+import Footer from '@/components/ui/footer';
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] });
@@ -60,7 +61,7 @@ export default function RootLayout({
                 {children}
               </GridItem>
               <GridItem pl="2" bg="blue.300" area={'footer'}>
-                Footer
+                <Footer />
               </GridItem>
             </Grid>
           </div>
