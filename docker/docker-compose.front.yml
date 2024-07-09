@@ -5,8 +5,6 @@ services:
       dockerfile: ../frontend/Dockerfile
     ports:
       - '3000:3000'
-    volumes:
-      - ../frontend:/app
     working_dir: /app/src
     environment:
       - CHOKIDAR_USEPOLLING=true
@@ -14,3 +12,5 @@ services:
     depends_on:
       - backend
       - database
+    volumes:
+      - ../frontend:/app

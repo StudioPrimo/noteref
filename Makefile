@@ -54,15 +54,28 @@ del-data:
 
 .PHONY: down-volume
 down-volume:
-	docker compose down -v
+	docker compose \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
+	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) down \
+	-v
 
 .PHONY: f
 f:
-	docker compose exec frontend bash
+	docker compose --env-file .env.local \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
+	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec frontend bash
 
 .PHONY: b
 b:
-	docker compose exec backend sh
+	docker compose --env-file .env.local \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
+	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec backend sh
 
 .PHONY: backend-test
 backend-test:
@@ -75,3 +88,8 @@ up-build:
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
 	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d --build
+	$(ENV_LOCAL) docker compose \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
+	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec frontend npm install
