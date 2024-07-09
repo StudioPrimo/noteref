@@ -4,10 +4,7 @@ WORKDIR /app/src
 
 COPY ./src/package*.json ./
 
-RUN npm install
-
-COPY ./src .
 
 
-
+CMD ["npm", "install"]
 EXPOSE 3000
