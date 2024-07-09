@@ -16,6 +16,9 @@ jobs:
     - name: set up server
       run: make up
 
+    - name: docker ps
+      run: docker ps
+
     - name: Check the 8080
       uses: jtalk/url-health-check-action@v4
       with:
