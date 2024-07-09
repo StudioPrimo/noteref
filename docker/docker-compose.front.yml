@@ -6,7 +6,6 @@ services:
     volumes:
       - ../frontend:/app
     working_dir: /app/src
-    command: /bin/sh -c "npm install && tail -f /dev/null"
     environment:
       - CHOKIDAR_USEPOLLING=true
     tty: true
