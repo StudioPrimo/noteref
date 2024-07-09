@@ -9,6 +9,8 @@ services:
     depends_on:
       - backend
       - db
+    volumes:
+      - ./frontend/src:/app/src
 
   backend:
     build:
