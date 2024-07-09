@@ -22,7 +22,7 @@ DATA_DIR := ./database/data
 # rm
 RM:=rm -rf
 
-.PHONY: up-d
+.PHONY: up
 up: ## docker環境を立ち上げる
 	$(ENV_LOCAL) docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
@@ -30,7 +30,7 @@ up: ## docker環境を立ち上げる
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
 	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d
 
-.PHONY: down-d
+.PHONY: down
 down: ## dockerイメージを削除し、docker環境を閉じる
 	docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
