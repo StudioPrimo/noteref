@@ -25,7 +25,7 @@ services:
 
   db:
     image: mysql:8.0
-    restart: always
+    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: primo
       MYSQL_DATABASE: mydb
@@ -33,6 +33,12 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
 
 volumes:
   db_data:
