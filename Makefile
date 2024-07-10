@@ -34,7 +34,11 @@ up: ## docker環境を立ち上げる
 	$(ENV_LOCAL) docker compose $(FILE) up -d
 
 .PHONY: down
-down: ## dockerイメージを削除し、docker環境を閉じる
+down:
+	docker compose $(FILE) down
+
+.PHONY: down-all
+down-all: ## dockerイメージを削除し、docker環境を閉じる
 	docker compose $(FILE) down \
 	--rmi all --volumes --remove-orphans
 
