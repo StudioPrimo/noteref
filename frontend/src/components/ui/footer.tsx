@@ -13,6 +13,9 @@ export default function Footer() {
             borderRadius="full"
           />
         </Link>
+        <Link href="https://x.com/Coocy_">
+          <Image mt={1} src="X_logo.svg" alt="icon" boxSize={'40px'} />
+        </Link>
       </Flex>
     </>
   );
