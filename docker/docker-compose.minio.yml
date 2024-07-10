@@ -1,10 +1,26 @@
 services:
   minio:
-    image: quay.io/minio/minio:latest
-    environment:
-      MINIO_ROOT_USER: root
-      MINIO_ROOT_PASSWORD: password
-    command: server --console-address ":9001" /data
+    container_name: minio
+    image: minio/minio:latest
+    volumes:
+      - /minio
     ports:
-      - 9000:9000
-      - 9001:9001
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=miniominio
+      - MINIO_ROOT_PASSWORD=miniominio
+    command: ['server', '/export', '--console-address', ':9001']
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc config host add minio http://minio:9000 miniominio miniominio) do echo '...waiting...' && sleep 1; done;
+      /usr/bin/mc mb minio/noteref;
+      /usr/bin/mc policy download minio/noteref;
+      exit 0;
+      "
+volumes:
+  minio:
