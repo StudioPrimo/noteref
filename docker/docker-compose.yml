@@ -13,3 +13,8 @@ services:
     container_name: noteref-frontend
     restart: always
     tty: true
+
+  minio:
+    container_name: noteref-minio
+    restart: always
+    tty: true

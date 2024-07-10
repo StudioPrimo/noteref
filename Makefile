@@ -12,6 +12,7 @@ DOCKER_COMPOSE_LOCAL            := $(DOCKER_FILE_DIR)/docker-compose.yml
 DOCKER_COMPOSE_LOCAL_DATABASE   := $(DOCKER_FILE_DIR)/docker-compose.database.yml
 DOCKER_COMPOSE_LOCAL_SERVER     := $(DOCKER_FILE_DIR)/docker-compose.server.yml
 DOCKER_COMPOSE_LOCAL_FRONT      := $(DOCKER_FILE_DIR)/docker-compose.front.yml
+DOCKER_COMPOSE_LOCAL_MINIO		:= $(DOCKER_FILE_DIR)/docker-compose.minio.yml
 DOCKER_EXEC                     := docker exec -it
 GITHUB_REPOSITORY_NAME          := noteref
 DB_CONTAINER_NAME               := $(GITHUB_REPOSITORY_NAME)-database
@@ -22,21 +23,19 @@ DATA_DIR := ./database/data
 # rm
 RM:=rm -rf
 
-.PHONY: up
-up: ## docker環境を立ち上げる
-	$(ENV_LOCAL) docker compose \
-	-f $(DOCKER_COMPOSE_LOCAL) \
+FILE := -f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) \
+	-f $(DOCKER_COMPOSE_LOCAL_MINIO)
+
+.PHONY: up
+up: ## docker環境を立ち上げる
+	$(ENV_LOCAL) docker compose $(FILE) up -d
 
 .PHONY: down
 down: ## dockerイメージを削除し、docker環境を閉じる
-	docker compose \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) down \
+	docker compose $(FILE) down \
 	--rmi all --volumes --remove-orphans
 
 .PHONY: fclean
@@ -54,28 +53,16 @@ del-data:
 
 .PHONY: down-volume
 down-volume:
-	docker compose \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) down \
+	docker compose $(FILE) down \
 	-v
 
 .PHONY: f
 f:
-	docker compose --env-file .env.local \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec frontend bash
+	docker compose --env-file .env.local $(FILE) exec frontend bash
 
 .PHONY: b
 b:
-	docker compose --env-file .env.local \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec backend sh
+	docker compose --env-file .env.local $(FILE) exec backend sh
 
 .PHONY: backend-test
 backend-test:
@@ -83,13 +70,5 @@ backend-test:
 
 .PHONY: up-build
 up-build:
-	$(ENV_LOCAL) docker compose \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d --build
-	$(ENV_LOCAL) docker compose \
-	-f $(DOCKER_COMPOSE_LOCAL) \
-	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_FRONT) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) exec frontend npm install
+	$(ENV_LOCAL) docker compose $(FILE) up -d --build
+	$(ENV_LOCAL) docker compose $(FILE) exec frontend npm install
