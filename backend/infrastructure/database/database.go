@@ -24,7 +24,6 @@ func NewConn() (*Conn, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open MySQL : %w", err)
 	}
-	defer pool.Close()
 
 	db := bun.NewDB(pool, mysqldialect.New())
 
