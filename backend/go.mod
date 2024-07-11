@@ -5,6 +5,9 @@ go 1.22.4
 require (
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-gonic/gin v1.10.0
+	github.com/uptrace/bun v1.2.1
+	github.com/uptrace/bun/dialect/mysqldialect v1.2.1
+	github.com/uptrace/bun/extra/bundebug v1.2.1
 	go.uber.org/mock v0.4.0
 )
 
@@ -21,7 +24,6 @@ require (
 	github.com/go-playground/validator/v10 v10.22.0 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
 	github.com/kr/text v0.2.0 // indirect
@@ -34,9 +36,6 @@ require (
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	github.com/uptrace/bun v1.2.1 // indirect
-	github.com/uptrace/bun/dialect/mysqldialect v1.2.1 // indirect
-	github.com/uptrace/bun/extra/bundebug v1.2.1 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
@@ -47,5 +46,4 @@ require (
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/gorm v1.25.11 // indirect
 )
