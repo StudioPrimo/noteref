@@ -9,17 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/lib-storage": "^3.614.0",
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "axios": "^1.7.2",
+    "cdate": "^0.0.7",
+    "dotenv": "^16.4.5",
     "framer-motion": "^11.2.14",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-pdf": "^9.1.0"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.614.0",
+    "@aws-sdk/credential-providers": "^3.614.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
