@@ -1,6 +1,15 @@
-import { Center, Flex, Image, Link, Text } from '@chakra-ui/react';
+'use client';
+
+import React, { useState, ChangeEvent } from 'react';
+import { Center, Flex, Image, Link, Text, Input } from '@chakra-ui/react';
+
 export default function Header() {
   const pages = ['home', 'about', 'upload'];
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
   return (
     <>
@@ -36,6 +45,12 @@ export default function Header() {
               </Link>
             );
           })}
+          <Input
+            placeholder="Search pages"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            ml={4}
+          />
         </Center>
       </Flex>
     </>
