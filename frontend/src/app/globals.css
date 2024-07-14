@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+canvas.hiddenCanvasElement {
+  display: none;
+}
