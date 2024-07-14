@@ -10,6 +10,7 @@ type User struct {
 	Id            string `bun:",pk"`
 	Name          string
 	IsAdmin       bool
+	Email         string `bun:"email"`
 	bun.BaseModel `bun:"table:users,alias:u"`
 }
 
