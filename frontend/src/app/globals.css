@@ -4,3 +4,7 @@
 canvas.hiddenCanvasElement {
   display: none;
 }
+.page {
+  margin: 0;
+  padding: 0;
+}
