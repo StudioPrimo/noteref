@@ -1,3 +1,4 @@
+import { api } from '@/utils/api';
 import { Config } from '@/utils/Config';
 import nextAuth from 'next-auth';
 import googleProvider from 'next-auth/providers/google';
@@ -25,6 +26,11 @@ const handler = nextAuth({
       return token;
     },
     session: ({ session, token }) => {
+      const res = api.post('/register', {
+        email: token.email,
+        name: token.name,
+      });
+      console.log(res);
       return {
         ...session,
         user: {

@@ -7,5 +7,6 @@ import (
 func Exec() {
 	r := router.NewRouter()
 	r.InitHealthRouter()
+	r.InitUserRouter()
 	r.Serve()
 }

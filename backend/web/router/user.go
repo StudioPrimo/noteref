@@ -1,6 +1,6 @@
 package router
 
-func (r Router) InitCreateUserByEmailHandler() {
+func (r Router) InitUserRouter() {
 	userHandler, err := InitUserWire()
 	if err != nil {
 		panic(err)
