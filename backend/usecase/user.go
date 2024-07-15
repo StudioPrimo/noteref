@@ -19,6 +19,7 @@ type IUserUsecase interface {
 	Create(ctx context.Context, user *model.User) (*model.User, error)
 	Delete(ctx context.Context, id string) error
 	GetByID(ctx context.Context, id string) (*model.User, error)
+	GetByEmail(ctx context.Context, email string) (*model.User, error)
 }
 
 func NewUserUsecase(repo repository.IUserRepository) IUserUsecase {
@@ -50,4 +51,12 @@ func (uu *UserUsecase) GetByID(ctx context.Context, id string) (*model.User, err
 	}
 	resuser, err := uu.repo.GetByID(ctx, id)
 	return resuser, err
+}
+
+func (uu *UserUsecase) GetByEmail(ctx context.Context, email string) (*model.User, error) {
+	if email == "" {
+		return nil, fmt.Errorf("email empty")
+	}
+	user, err := uu.repo.GetByEmail(ctx, email)
+	return user, err
 }
