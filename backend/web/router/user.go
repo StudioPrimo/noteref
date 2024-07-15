@@ -1,7 +1,10 @@
 package router
 
-import "github.com/StudioPrimo/noteref/web/http/handler"
-
 func (r Router) InitCreateUserByEmailHandler() {
-	r.Engine.POST("/register", handler.CreateUser)
+	userHandler, err := InitUserWire()
+	if err != nil {
+		panic(err)
+	}
+
+	r.Engine.POST("/register", userHandler.Handler.CreateUser)
 }

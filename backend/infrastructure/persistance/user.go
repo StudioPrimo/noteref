@@ -5,32 +5,38 @@ import (
 
 	"github.com/StudioPrimo/noteref/infrastructure/database"
 	"github.com/StudioPrimo/noteref/model"
-	"github.com/StudioPrimo/noteref/repository"
 )
 
 var _ IUserPersistance = &UserPersistance{}
 
 type UserPersistance struct {
-	repo *repository.IUserRepository
-	db   *database.Conn
+	Conn *database.Conn
 }
 
 type IUserPersistance interface {
-	CreateOne(ctx context.Context, user *model.User) (*model.User, error)
+	Create(ctx context.Context, user *model.User) (*model.User, error)
+	FindByEmail(ctx context.Context, email string) (*model.User, error)
 }
 
-func NewUserPersistance(repo *repository.IUserRepository, db *database.Conn) IUserPersistance {
+func NewUserPersistance(Conn *database.Conn) IUserPersistance {
 	return &UserPersistance{
-		repo: repo,
-		db:   db,
+		Conn: Conn,
 	}
 }
 
-func (u *UserPersistance) CreateOne(ctx context.Context, user *model.User) (*model.User, error) {
-	if _, err := u.db.DB.NewInsert().Model(user).Exec(ctx); err != nil {
+func (u *UserPersistance) Create(ctx context.Context, user *model.User) (*model.User, error) {
+	if _, err := u.Conn.DB.NewInsert().Model(user).Exec(ctx); err != nil {
 		return nil, err
 	}
 
 	return user, nil
 
+}
+
+func (u *UserPersistance) FindByEmail(ctx context.Context, email string) (*model.User, error) {
+	var user *model.User
+	if err := u.Conn.DB.NewSelect().Model(&user).Where("email = ?", email).Scan(ctx); err != nil {
+		return nil, err
+	}
+	return user, nil
 }
