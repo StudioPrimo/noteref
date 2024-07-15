@@ -9,7 +9,6 @@ package router
 import (
 	"github.com/StudioPrimo/noteref/infrastructure/database"
 	"github.com/StudioPrimo/noteref/infrastructure/persistance"
-	"github.com/StudioPrimo/noteref/repository"
 	"github.com/StudioPrimo/noteref/usecase"
 	"github.com/StudioPrimo/noteref/web/http/handler"
 	"github.com/google/wire"
@@ -22,8 +21,7 @@ func InitUserWire() (*UserHandler, error) {
 	if err != nil {
 		return nil, err
 	}
-	iUserPersistance := persistance.NewUserPersistance(conn)
-	iUserRepository := repository.NewUserRepository(iUserPersistance)
+	iUserRepository := persistance.NewUserPersistance(conn)
 	iUserUsecase := usecase.NewUserUsecase(iUserRepository)
 	userHandler := handler.NewUserHandler(iUserUsecase)
 	routerUserHandler := &UserHandler{
@@ -37,8 +35,6 @@ func InitUserWire() (*UserHandler, error) {
 var db = wire.NewSet(database.NewConn)
 
 var persistanceSet = wire.NewSet(persistance.NewUserPersistance)
-
-var repositorySet = wire.NewSet(repository.NewUserRepository)
 
 var usecaseSet = wire.NewSet(usecase.NewUserUsecase)
 
