@@ -16,8 +16,13 @@ const handler = nextAuth({
   },
   callbacks: {
     jwt: ({ token, user }) => {
+      api.post('/register', {
+        email: token.email,
+        name: token.name,
+      });
       if (user) {
         const u = user as unknown as any;
+
         return {
           ...token,
           id: u.id,
@@ -26,11 +31,6 @@ const handler = nextAuth({
       return token;
     },
     session: ({ session, token }) => {
-      const res = api.post('/register', {
-        email: token.email,
-        name: token.name,
-      });
-      console.log(res);
       return {
         ...session,
         user: {

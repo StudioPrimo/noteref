@@ -41,6 +41,7 @@ down:
 down-all: ## dockerイメージを削除し、docker環境を閉じる
 	docker compose $(FILE) down \
 	--rmi all --volumes --remove-orphans
+	$(MAKE) del-data
 
 .PHONY: fclean
 fclean:down del-volumes ## マウントしたデータを削除、またdockerイメージも削除する
@@ -59,6 +60,7 @@ del-data:
 down-volume:
 	docker compose $(FILE) down \
 	-v
+	$(MAKE) del-data
 
 .PHONY: f
 f:

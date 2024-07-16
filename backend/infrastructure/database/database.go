@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/StudioPrimo/noteref/config"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
 	"github.com/uptrace/bun/extra/bundebug"

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 
 	"github.com/StudioPrimo/noteref/model"
 	"github.com/StudioPrimo/noteref/repository"
@@ -29,6 +30,7 @@ func NewUserUsecase(repo repository.IUserRepository) IUserUsecase {
 }
 
 func (uu *UserUsecase) Create(ctx context.Context, user *model.User) (*model.User, error) {
+	log.Println(user)
 	resuser, err := uu.repo.Create(ctx, user)
 	return resuser, err
 }

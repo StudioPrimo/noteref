@@ -26,7 +26,6 @@ func NewUserHandler(uc usecase.IUserUsecase) UserHandler {
 
 func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 	var d body
-
 	if err := ctx.BindJSON(&d); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -54,7 +53,7 @@ func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	newUser, err := model.NewUser(uuid.New().String(), d.Email, d.Name, true)
+	newUser, err := model.NewUser(uuid.New().String(), d.Name, d.Email, true)
 
 	res, err := uh.uc.Create(ctx, newUser)
 	if err != nil {
