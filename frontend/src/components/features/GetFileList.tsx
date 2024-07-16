@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { S3 } from '@/utils/S3Client';
 import { Box, List, ListItem, Spinner, Text } from '@chakra-ui/react';
 
+import PDFViewer from '@/components/features/PDFViewer';
+
 interface S3File {
   Key: string;
 }
@@ -10,6 +12,7 @@ interface S3File {
 const GetFileList = () => {
   const [fileList, setFileList] = useState<S3File[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchFileList = async () => {
@@ -35,6 +38,22 @@ const GetFileList = () => {
     fetchFileList();
   }, []);
 
+  const isPDF = (key: string): boolean => {
+    return key.toLowerCase().endsWith('.pdf');
+  };
+
+  const getFile = async (key: string) => {
+    const s3 = new S3();
+
+    const fileStream = await s3.getFile(key);
+    if (fileStream) {
+      setSelectedFile(fileStream);
+    }
+  };
+
+  getFile('sample.pdf');
+  console.log(selectedFile);
+
   return (
     <Box>
       {loading ? (
@@ -44,7 +63,11 @@ const GetFileList = () => {
           {fileList.length > 0 ? (
             fileList.map((file, index) => (
               <ListItem key={index}>
-                <Text>{file.Key}</Text>
+                {isPDF(file.Key) ? (
+                  <PDFViewer fileUrl={selectedFile} />
+                ) : (
+                  <Text>{file.Key}</Text>
+                )}
               </ListItem>
             ))
           ) : (

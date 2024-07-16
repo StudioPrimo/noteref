@@ -1,4 +1,5 @@
 import {
+  GetObjectCommand,
   ListObjectsV2Command,
   ListObjectsV2CommandInput,
   S3Client,
@@ -47,23 +48,36 @@ export class S3 {
     try {
       let isTruncated = true;
 
-      console.log('Your bucket contains the following objects:\n');
-      let contents = '';
+      let content = '';
 
       while (isTruncated) {
         const data = await this.client.send(command);
-        const contentsList = (data.Contents || [])
+        const contentList = (data.Contents || [])
           .map((c) => ` • ${c.Key}`)
           .join('\n');
-        contents += contentsList + '\n';
+        content += contentList + '\n';
         isTruncated = data.IsTruncated ?? false;
         commandInput.ContinuationToken = data.NextContinuationToken;
       }
 
-      console.log(contents);
-      return contents;
+      console.log(content);
+      return content;
     } catch (err) {
       console.error(err);
     }
+  }
+  async getFile(path: string) {
+    const command = new GetObjectCommand({
+      Bucket: this.bucketName,
+      Key: path,
+    });
+
+    const response = await this.client.send(command);
+
+    if (!response.Body) {
+      return;
+    }
+    const str = await response.Body.transformToString();
+    return new File([str], 'test');
   }
 }
