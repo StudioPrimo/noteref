@@ -26,7 +26,6 @@ func NewUserHandler(uc usecase.IUserUsecase) UserHandler {
 
 func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 	var d body
-
 	if err := ctx.BindJSON(&d); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),

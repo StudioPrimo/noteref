@@ -1,8 +1,12 @@
 package router
 
-func (r Router) InitUserRouter() {
+import "log"
+
+func (r *Router) InitUserRouter() {
+	log.Println("Init User Router")
 	userHandler, err := InitUserWire()
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 

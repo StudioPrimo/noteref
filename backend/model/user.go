@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	Id            string `bun:",pk"`
+	Id            string `bun:"id,pk"`
 	Name          string
 	IsAdmin       bool
 	Email         string `bun:"email"`

@@ -18,3 +18,4 @@ services:
       - DB_PORT=${DB_PORT}
       - DB_PASSWORD=${DB_PASSWORD}
       - PORT=${PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
