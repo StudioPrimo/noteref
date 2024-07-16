@@ -10,6 +10,7 @@ services:
       - database
     volumes:
       - ../backend:/go/src/github.com/StudioPrimo/noteref
+    working_dir: /go/src/github.com/StudioPrimo/noteref
     environment:
       - DB_DATABASE=${DB_DATABASE}
       - DB_HOST=${DB_HOST}
