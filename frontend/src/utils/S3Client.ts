@@ -1,4 +1,8 @@
-import { S3Client } from '@aws-sdk/client-s3';
+import {
+  ListObjectsV2Command,
+  ListObjectsV2CommandInput,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { Config } from './Config';
 
@@ -33,5 +37,33 @@ export class S3 {
       .catch((e) => {
         console.log('Error uploading', e);
       });
+  }
+  async getListObject() {
+    const commandInput: ListObjectsV2CommandInput = {
+      Bucket: this.bucketName,
+    };
+    const command = new ListObjectsV2Command(commandInput);
+
+    try {
+      let isTruncated = true;
+
+      console.log('Your bucket contains the following objects:\n');
+      let contents = '';
+
+      while (isTruncated) {
+        const data = await this.client.send(command);
+        const contentsList = (data.Contents || [])
+          .map((c) => ` • ${c.Key}`)
+          .join('\n');
+        contents += contentsList + '\n';
+        isTruncated = data.IsTruncated ?? false;
+        commandInput.ContinuationToken = data.NextContinuationToken;
+      }
+
+      console.log(contents);
+      return contents;
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

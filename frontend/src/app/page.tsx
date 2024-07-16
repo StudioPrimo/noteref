@@ -1,9 +1,9 @@
-import PDFViewer from '@/components/features/PDFViewer';
+import ListFiles from '@/components/features/GetFileList';
 
 export default function Home() {
   return (
     <div>
-      <PDFViewer fileUrl="sample.pdf" />
+      <ListFiles />
     </div>
   );
 }
