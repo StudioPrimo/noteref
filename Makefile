@@ -84,6 +84,5 @@ backend-test:
 
 .PHONY: up-build
 up-build:
-	$(ENV_LOCAL) docker compose $(FILE) up -d --build
 	$(MAKE) del-node-modules-and-package-lock
-	$(ENV_LOCAL) docker compose $(FILE) exec frontend npm install
+	$(ENV_LOCAL) docker compose $(FILE) up -d --build
