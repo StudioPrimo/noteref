@@ -19,6 +19,8 @@ DB_CONTAINER_NAME               := $(GITHUB_REPOSITORY_NAME)-database
 
 # dir
 DATA_DIR := ./database/data
+NODE_MODULES := ./frontend/src/node_modules
+PACKAGE_LOCK := ./frontend/src/package-lock.json
 
 # rm
 RM:=rm -rf
@@ -56,11 +58,17 @@ del-volumes:del-data
 del-data:
 	sudo $(RM) $(DATA_DIR)
 
+.PHONY: del-node-modules-and-package-lock
+del-node-modules-and-package-lock:
+	sudo $(RM) $(NODE_MODULES)
+	sudo $(RM) $(PACKAGE_LOCK)
+
 .PHONY: down-volume
 down-volume:
 	docker compose $(FILE) down \
 	-v
 	$(MAKE) del-data
+	$(MAKE) del-node-modules-and-package-lock
 
 .PHONY: f
 f:
@@ -77,4 +85,5 @@ backend-test:
 .PHONY: up-build
 up-build:
 	$(ENV_LOCAL) docker compose $(FILE) up -d --build
+	$(MAKE) del-node-modules-and-package-lock
 	$(ENV_LOCAL) docker compose $(FILE) exec frontend npm install
