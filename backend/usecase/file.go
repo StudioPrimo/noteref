@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/StudioPrimo/noteref/model"
 	"github.com/StudioPrimo/noteref/repository"
@@ -26,6 +28,13 @@ func NewFileUsecase(repo repository.IFileRepository) IFileUsecase {
 }
 
 func (fu *FileUsecase) Create(ctx context.Context, file *model.File) (*model.File, error) {
+	file, err := fu.GetByID(ctx, file.ID)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, errors.New("The file with this id already exists")
+	} else if err == nil {
+		return nil, err
+	}
+
 	resfile, err := fu.repo.Create(ctx, file)
 	return resfile, err
 }
