@@ -23,3 +23,8 @@ jobs:
             make down
             make up-build
             docker image prune -f
+            protocol: tcp
+          timeout: 30s
+          command_timeout: 10m
+          proxy_port: ${{ secrets.PROXY_PORT }}
+          proxy_timeout: 30s
