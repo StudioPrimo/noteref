@@ -1,13 +1,9 @@
-FROM node:22.4.1 as builder
+FROM node:22.4.1
 WORKDIR /app/src
 COPY src/package.json /app/src/package.json
 RUN npm install yarn 
 CMD [ "yarn", "install" ]
 
-
-FROM node:22.4.1
-WORKDIR /app/src
-COPY --from=builder /app/src/node_modules /app/src/node_modules
 EXPOSE 3000
 
 WORKDIR /app/src

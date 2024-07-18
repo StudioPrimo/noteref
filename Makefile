@@ -34,8 +34,10 @@ FILE := -f $(DOCKER_COMPOSE_LOCAL) \
 
 .PHONY: up
 up: ## docker環境を立ち上げる
-	$(ENV_LOCAL) docker compose $(FILE) up -d
+	mkdir -p $(NODE_MODULES)
 
+	$(ENV_LOCAL) docker compose $(FILE) up -d
+	
 .PHONY: down
 down:
 	docker compose $(FILE) down
