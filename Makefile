@@ -21,6 +21,7 @@ DB_CONTAINER_NAME               := $(GITHUB_REPOSITORY_NAME)-database
 DATA_DIR := ./database/data
 NODE_MODULES := ./frontend/src/node_modules
 PACKAGE_LOCK := ./frontend/src/package-lock.json
+minio := ./docker/minio
 
 # rm
 RM:=rm -rf
@@ -63,12 +64,17 @@ del-node-modules-and-package-lock:
 	sudo $(RM) $(NODE_MODULES)
 	sudo $(RM) $(PACKAGE_LOCK)
 
+.PHONY: del-minio
+del-minio:
+	sudo $(RM) $(minio)
+
 .PHONY: down-volume
 down-volume:
 	docker compose $(FILE) down \
 	-v
 	$(MAKE) del-data
 	$(MAKE) del-node-modules-and-package-lock
+	$(MAKE) del-minio
 
 .PHONY: f
 f:
@@ -85,4 +91,5 @@ backend-test:
 .PHONY: up-build
 up-build:
 	$(MAKE) del-node-modules-and-package-lock
+	mkdir -p $(NODE_MODULES)
 	$(ENV_LOCAL) docker compose $(FILE) up -d --build
