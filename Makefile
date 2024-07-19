@@ -19,6 +19,10 @@ DB_CONTAINER_NAME               := $(GITHUB_REPOSITORY_NAME)-database
 
 # dir
 DATA_DIR := ./database/data
+NODE_MODULES := ./frontend/src/node_modules
+PACKAGE_LOCK := ./frontend/src/yarn.lock
+minio := ./docker/minio
+entrypoint := ./frontend/entrypoint.sh
 
 # rm
 RM:=rm -rf
@@ -31,8 +35,11 @@ FILE := -f $(DOCKER_COMPOSE_LOCAL) \
 
 .PHONY: up
 up: ## docker環境を立ち上げる
-	$(ENV_LOCAL) docker compose $(FILE) up -d
+	mkdir -p $(NODE_MODULES)
+	chmod +x $(entrypoint)
 
+	$(ENV_LOCAL) docker compose $(FILE) up -d
+	
 .PHONY: down
 down:
 	docker compose $(FILE) down
@@ -42,6 +49,8 @@ down-all: ## dockerイメージを削除し、docker環境を閉じる
 	docker compose $(FILE) down \
 	--rmi all --volumes --remove-orphans
 	$(MAKE) del-data
+	$(MAKE) del-node-modules-and-package-lock
+	$(MAKE) del-minio
 
 .PHONY: fclean
 fclean:down del-volumes ## マウントしたデータを削除、またdockerイメージも削除する
@@ -56,11 +65,22 @@ del-volumes:del-data
 del-data:
 	sudo $(RM) $(DATA_DIR)
 
+.PHONY: del-node-modules-and-package-lock
+del-node-modules-and-package-lock:
+	sudo $(RM) $(NODE_MODULES)
+	sudo $(RM) $(PACKAGE_LOCK)
+
+.PHONY: del-minio
+del-minio:
+	sudo $(RM) $(minio)
+
 .PHONY: down-volume
 down-volume:
 	docker compose $(FILE) down \
 	-v
 	$(MAKE) del-data
+	$(MAKE) del-node-modules-and-package-lock
+	$(MAKE) del-minio
 
 .PHONY: f
 f:
@@ -76,5 +96,8 @@ backend-test:
 
 .PHONY: up-build
 up-build:
+	$(MAKE) down-volume
+	$(MAKE) del-node-modules-and-package-lock
+	chmod +x $(entrypoint)
+	mkdir -p $(NODE_MODULES)
 	$(ENV_LOCAL) docker compose $(FILE) up -d --build
-	$(ENV_LOCAL) docker compose $(FILE) exec frontend npm install

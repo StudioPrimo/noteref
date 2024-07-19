@@ -3,14 +3,30 @@ services:
     build:
       context: ../frontend
       dockerfile: ../frontend/Dockerfile
+      args:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-miniominio}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-miniominio}
+      - REGION=${REGION:-us-east-1}
+      - S3_SIGNATURE_VERSION=${S3_SIGNATURE_VERSION:-s3v4}
+      - S3_ENDPOINT_URL=${S3_ENDPOINT_URL:-http://127.0.0.1:9000}
     ports:
       - '3000:3000'
     working_dir: /app/src
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - ENVIRONMENT=${ENVIRONMENT}
     tty: true
     depends_on:
       - backend
       - database
     volumes:
       - ../frontend:/app
+      - node_modules:/app/src/node_modules
+
+volumes:
+  node_modules:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/frontend/src/node_modules
+      o: bind

@@ -3,7 +3,7 @@ package model
 import "errors"
 
 type File struct {
-	Id     string `bun:",pk"`
+	ID     string `bun:",pk"`
 	Name   string
 	UserID string
 }
@@ -20,7 +20,7 @@ func NewFile(id, name, userID string) (*File, error) {
 	}
 
 	return &File{
-		Id:     id,
+		ID:     id,
 		Name:   name,
 		UserID: userID,
 	}, nil

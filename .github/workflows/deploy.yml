@@ -20,6 +20,6 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
             git pull origin main
-            docker compose stop
-            docker compose up -d --build
+            make down
+            make up-build
             docker image prune -f
