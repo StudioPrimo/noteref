@@ -2,7 +2,10 @@ FROM node:22.4.1
 WORKDIR /app/src
 COPY src/package.json /app/src/package.json
 RUN npm install yarn 
-CMD [ "yarn", "install" ]
+
+COPY entrypoint.sh /app
+
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 EXPOSE 3000
 
