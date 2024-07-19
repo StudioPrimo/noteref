@@ -23,7 +23,16 @@ type UserHandler struct {
 	Handler handler.UserHandler
 }
 
+type FileHandler struct {
+	Handler handler.FileHandler
+}
+
 func InitUserWire() (*UserHandler, error) {
 	wire.Build(db, persistanceSet, usecaseSet, handlerSet, wire.Struct(new(UserHandler), "*"))
+	return nil, nil
+}
+
+func InitFileWire() (*FileHandler, error) {
+	wire.Build(db, persistanceSet, usecaseSet, handlerSet, wire.Struct(new(FileHandler), "*"))
 	return nil, nil
 }
