@@ -39,32 +39,24 @@ export class S3 {
         console.log('Error uploading', e);
       });
   }
-  async getListObject() {
+  async getListFilesName() {
     const commandInput: ListObjectsV2CommandInput = {
       Bucket: this.bucketName,
     };
     const command = new ListObjectsV2Command(commandInput);
 
-    try {
-      let isTruncated = true;
+    let content = '';
 
-      let content = '';
-
-      while (isTruncated) {
-        const data = await this.client.send(command);
-        const contentList = (data.Contents || [])
-          .map((c) => ` • ${c.Key}`)
-          .join('\n');
-        content += contentList + '\n';
-        isTruncated = data.IsTruncated ?? false;
-        commandInput.ContinuationToken = data.NextContinuationToken;
-      }
-
-      console.log(content);
-      return content;
-    } catch (err) {
-      console.error(err);
+    const data = await this.client.send(command);
+    const contentList = (data.Contents || []).map((c) => `${c.Key}`).join('\n');
+    content += contentList + '\n';
+    if (content == null) {
+      return;
     }
+    commandInput.ContinuationToken = data.NextContinuationToken;
+
+    console.log(content);
+    return content;
   }
   async getFile(path: string) {
     const command = new GetObjectCommand({

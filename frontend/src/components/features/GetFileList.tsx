@@ -18,12 +18,12 @@ const GetFileList = () => {
     const fetchFileList = async () => {
       const s3 = new S3();
       try {
-        const data = await s3.getListObject();
+        const data = await s3.getListFilesName();
         if (data) {
           const fileArray = data
             .split('\n')
             .filter((file: string) => file.trim() !== '')
-            .map((file: string) => ({ Key: file.replace(' • ', '') }));
+            .map((file: string) => ({ Key: file.trim() }));
           setFileList(fileArray);
         } else {
           console.error('No data returned from S3');
@@ -38,10 +38,6 @@ const GetFileList = () => {
     fetchFileList();
   }, []);
 
-  const isPDF = (key: string): boolean => {
-    return key.toLowerCase().endsWith('.pdf');
-  };
-
   const getFile = async (key: string) => {
     const s3 = new S3();
 
@@ -49,6 +45,10 @@ const GetFileList = () => {
     if (fileStream) {
       setSelectedFile(fileStream);
     }
+  };
+
+  const isPDF = (key: string): boolean => {
+    return key.toLowerCase().endsWith('.pdf');
   };
 
   getFile('sample.pdf');
