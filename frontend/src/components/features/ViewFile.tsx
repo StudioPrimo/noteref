@@ -39,7 +39,7 @@ const ViewFile = () => {
       {selectedFile ? (
         <PDFViewer key={selectedFile.name} fileUrl={selectedFile} />
       ) : (
-        <p>Loading...</p>
+        <p>not set file</p>
       )}
     </Box>
   );
