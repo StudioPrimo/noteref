@@ -24,10 +24,10 @@ const resizeObserverOptions = {};
 
 const maxWidth = 800;
 
-type PDFFile = string | File | null;
+type PDFFile = File | null;
 
 type PDFViewerProps = {
-  fileUrl: string | File | null;
+  fileUrl: File | null;
 };
 
 export default function PDFViewer({ fileUrl }: PDFViewerProps) {

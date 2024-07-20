@@ -70,6 +70,10 @@ export class S3 {
     return content;
   }
   async getFile(path: string) {
+    if (path === '') {
+      console.log('No path provided');
+      return;
+    }
     const command = new GetObjectCommand({
       Bucket: this.bucketName,
       Key: path,
@@ -82,6 +86,6 @@ export class S3 {
       return;
     }
     const str = await response.Body.transformToByteArray();
-    return new File([str], 'test', { type: 'application/pdf' });
+    return new File([str], path, { type: 'application/pdf' });
   }
 }
