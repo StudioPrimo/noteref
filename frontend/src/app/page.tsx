@@ -1,9 +1,9 @@
-import ListFiles from '@/components/features/GetFileList';
+import ViewFile from '@/components/features/ViewFile';
 
 export default function Home() {
   return (
     <div>
-      <ListFiles />
+      <ViewFile />
     </div>
   );
 }

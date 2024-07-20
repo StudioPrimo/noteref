@@ -40,20 +40,31 @@ export class S3 {
       });
   }
   async getListFilesName() {
+    let isTruncated = true;
     const commandInput: ListObjectsV2CommandInput = {
       Bucket: this.bucketName,
     };
-    const command = new ListObjectsV2Command(commandInput);
 
     let content = '';
 
-    const data = await this.client.send(command);
-    const contentList = (data.Contents || []).map((c) => `${c.Key}`).join('\n');
-    content += contentList + '\n';
+    while (isTruncated) {
+      const command = new ListObjectsV2Command(commandInput);
+
+      const data = await this.client.send(command);
+      const contentList = (data.Contents || [])
+        .map((c) => `${c.Key}`)
+        .join('\n');
+      content += contentList + '\n';
+
+      isTruncated = data.IsTruncated ?? false;
+      commandInput.ContinuationToken = data.NextContinuationToken;
+      console.log('get file list');
+    }
+
     if (content == null) {
+      console.log('No file list found');
       return;
     }
-    commandInput.ContinuationToken = data.NextContinuationToken;
 
     console.log(content);
     return content;
@@ -67,9 +78,10 @@ export class S3 {
     const response = await this.client.send(command);
 
     if (!response.Body) {
+      console.log('No file found');
       return;
     }
-    const str = await response.Body.transformToString();
-    return new File([str], 'test');
+    const str = await response.Body.transformToByteArray();
+    return new File([str], 'test', { type: 'application/pdf' });
   }
 }
