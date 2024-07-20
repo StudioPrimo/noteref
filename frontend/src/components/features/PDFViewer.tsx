@@ -12,7 +12,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
+  import.meta.url
 ).toString();
 
 const options = {
@@ -24,10 +24,10 @@ const resizeObserverOptions = {};
 
 const maxWidth = 800;
 
-type PDFFile = string | File | null;
+type PDFFile = File | null;
 
 type PDFViewerProps = {
-  fileUrl: string | File | null;
+  fileUrl: File | null;
 };
 
 export default function PDFViewer({ fileUrl }: PDFViewerProps) {
