@@ -32,6 +32,7 @@ const AttachFile = () => {
     images.forEach(async (image) => {
       await services.uploadFile(image);
     });
+    alert('Upload success' + images[0].name);
   };
 
   return (

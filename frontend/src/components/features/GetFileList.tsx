@@ -52,14 +52,14 @@ const GetFileList = () => {
   };
 
   return (
-    <Box>
+    <Box position={'relative'}>
       {loading ? (
         <Spinner />
       ) : (
         <List spacing={3}>
           {fileList.length > 0 ? (
             fileList.map((file, index) => (
-              <ListItem key={index}>
+              <ListItem key={index} position={'relative'}>
                 <Button
                   onClick={() => handleFileClick(file.Key)}
                   bg="transparent" // 背景色を透明に設定
@@ -67,8 +67,11 @@ const GetFileList = () => {
                   _hover={{ bg: 'gray.100', color: 'blue.500' }} // ホバー時の背景色とテキスト色を設定
                   _focus={{ boxShadow: 'outline' }} // フォーカス時のスタイルを設定
                   _active={{ bg: 'blue.500', color: 'white' }} // アクティブ時の背景色を設定
+                  position={'relative'}
                 >
-                  {file.Key}
+                  <Text isTruncated position={'relative'} maxW={150}>
+                    {file.Key}
+                  </Text>
                 </Button>
               </ListItem>
             ))
