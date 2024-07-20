@@ -30,14 +30,52 @@ export class S3 {
         Body: file,
       },
     });
-    await upload
-      .done()
-      .then(() => {
-        console.log('Successfully uploade');
-      })
-      .catch((e) => {
-        console.log('Error uploading', e);
-      });
+    await upload.done().catch((e) => {
+      console.log('Error uploading', e);
+    });
+  }
+  async getListFilesName() {
+    let isTruncated = true;
+    const commandInput: ListObjectsV2CommandInput = {
+      Bucket: this.bucketName,
+    };
+
+    let content = '';
+
+    while (isTruncated) {
+      const command = new ListObjectsV2Command(commandInput);
+
+      const data = await this.client.send(command);
+      const contentList = (data.Contents || [])
+        .map((c) => `${c.Key}`)
+        .join('\n');
+      content += contentList + '\n';
+
+      isTruncated = data.IsTruncated ?? false;
+      commandInput.ContinuationToken = data.NextContinuationToken;
+    }
+
+    if (content == null) {
+      console.log('No file list found');
+      return;
+    }
+
+    return content;
+  }
+  async getFile(path: string) {
+    const command = new GetObjectCommand({
+      Bucket: this.bucketName,
+      Key: path,
+    });
+
+    const response = await this.client.send(command);
+
+    if (!response.Body) {
+      console.log('No file found');
+      return;
+    }
+    const str = await response.Body.transformToByteArray();
+    return new File([str], 'test', { type: 'application/pdf' });
   }
   async getListFilesName() {
     let isTruncated = true;

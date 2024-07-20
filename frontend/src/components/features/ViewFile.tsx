@@ -13,7 +13,7 @@ const ViewFile = () => {
   const dispatch = useAppDispatch();
 
   const activeFileKey = useAppSelector(
-    (state: RootState) => state.file.activeFileKey,
+    (state: RootState) => state.file.activeFileKey
   );
 
   useEffect(() => {

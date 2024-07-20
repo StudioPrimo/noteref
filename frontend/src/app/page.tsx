@@ -1,5 +1,3 @@
-'use client';
-
 import ViewFile from '@/components/features/ViewFile';
 
 export default function Home() {

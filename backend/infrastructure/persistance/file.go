@@ -32,5 +32,11 @@ func (f *FilePersistance) Delete(ctx context.Context, id string) error {
 }
 
 func (f *FilePersistance) GetByID(ctx context.Context, id string) (*model.File, error) {
-	return nil, nil
+	file := &model.File{}
+	err := f.Conn.DB.NewSelect().Model(&model.File{}).Where("id = ?", id).Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
+
 }
