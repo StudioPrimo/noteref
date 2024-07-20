@@ -13,7 +13,7 @@ const ViewFile = () => {
   const dispatch = useAppDispatch();
 
   const activeFileKey = useAppSelector(
-    (state: RootState) => state.file.activeFileKey
+    (state: RootState) => state.file.activeFileKey,
   );
 
   useEffect(() => {
@@ -34,10 +34,25 @@ const ViewFile = () => {
     viewPDFfromS3();
   }, [dispatch, activeFileKey]);
 
+  const isPDF = (key: string): boolean => {
+    return key.toLowerCase().endsWith('.pdf');
+  };
+
+  // ファイルが画像（PNG、JPG、JPEG、GIF）かどうかを判断する関数
+  const isImage = (key: string): boolean => {
+    return /\.(png|jpg|jpeg|gif)$/i.test(key.toLowerCase());
+  };
+
   return (
     <Box>
       {selectedFile ? (
-        <PDFViewer key={selectedFile.name} fileUrl={selectedFile} />
+        isPDF(selectedFile.name) ? (
+          <PDFViewer key={selectedFile.name} fileUrl={selectedFile} />
+        ) : isImage(selectedFile.name) ? (
+          <img src={URL.createObjectURL(selectedFile)} />
+        ) : (
+          <p>Unsupported file type</p>
+        )
       ) : (
         <p>not set file</p>
       )}
