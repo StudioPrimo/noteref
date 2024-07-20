@@ -30,14 +30,9 @@ export class S3 {
         Body: file,
       },
     });
-    await upload
-      .done()
-      .then(() => {
-        console.log('Successfully uploade');
-      })
-      .catch((e) => {
-        console.log('Error uploading', e);
-      });
+    await upload.done().catch((e) => {
+      console.log('Error uploading', e);
+    });
   }
   async getListFilesName() {
     let isTruncated = true;
@@ -58,7 +53,6 @@ export class S3 {
 
       isTruncated = data.IsTruncated ?? false;
       commandInput.ContinuationToken = data.NextContinuationToken;
-      console.log('get file list');
     }
 
     if (content == null) {
@@ -66,7 +60,6 @@ export class S3 {
       return;
     }
 
-    console.log(content);
     return content;
   }
   async getFile(path: string) {

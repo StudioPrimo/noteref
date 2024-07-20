@@ -3,10 +3,13 @@ import React, { useRef, useState } from 'react';
 import { Button, IconButton } from '@chakra-ui/react';
 import { AttachmentIcon } from '@chakra-ui/icons';
 import { S3 } from '@/utils/S3Client';
+import { useSession } from 'next-auth/react';
 
 const AttachFile = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<File[]>([]);
+  const { data: session } = useSession();
+  console.log('session', session);
 
   const onButtonClick = () => {
     inputRef.current?.click();
@@ -14,6 +17,10 @@ const AttachFile = () => {
 
   const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputImage = event.target.files;
+    if (inputImage && inputImage[0].type != 'application/pdf') {
+      alert('Please upload a PDF file');
+      return;
+    }
     if (inputImage != null) {
       const inputArray = Array.from(inputImage);
       setImages(inputArray);
@@ -29,13 +36,21 @@ const AttachFile = () => {
 
   return (
     <>
-      <input type="file" ref={inputRef} hidden onChange={onChangeImage} />
+      <input
+        type="file"
+        ref={inputRef}
+        hidden
+        onChange={onChangeImage}
+        accept="application/pdf"
+      />
       <IconButton
         aria-label="Input-image"
         icon={<AttachmentIcon />}
         onClick={onButtonClick}
       />
-      {images?.map((image, index) => <p key={index}>{image.name}</p>)}
+      {images?.map((image, index) => (
+        <p key={index}>{image.name}</p>
+      ))}
       {images.length > 0 && <Button onClick={uploadFiles}>Upload</Button>}
     </>
   );

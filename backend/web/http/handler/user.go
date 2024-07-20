@@ -49,6 +49,9 @@ func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 	if user != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "user already exists",
+			"user_id": user.Id,
+			"name":    user.Name,
+			"email":   user.Email,
 		})
 		return
 	}

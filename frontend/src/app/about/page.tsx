@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 
 const HealthStatus = () => {
   const [data, setData] = useState('Loading...');
-
   useEffect(() => {
     async function getHealth() {
       const response = await fetch('/api/health');

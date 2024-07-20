@@ -16,21 +16,18 @@ const GetFileList = () => {
       const s3 = new S3();
       try {
         const data = await s3.getListFilesName();
-        console.log('Data:', data);
         if (data) {
           const fileArray = data
             .split('\n')
             .filter((file: string) => file.trim() !== '')
             .map((file: string) => ({ Key: file.trim() }));
           setFileList(fileArray);
-          console.log('File list:', fileArray);
         } else {
           console.log('No data returned from S3');
         }
       } catch (error) {
         console.error('Error fetching file list', error);
       } finally {
-        console.log('Finished fetching file list');
         setLoading(false);
       }
     };
