@@ -32,7 +32,7 @@ const AttachFile = () => {
     images.forEach(async (image) => {
       await services.uploadFile(image);
     });
-    alert('Upload success' + images[0].name);
+    alert('Upload success');
   };
 
   return (
@@ -43,6 +43,7 @@ const AttachFile = () => {
         hidden
         onChange={onChangeImage}
         accept="application/pdf"
+        multiple
       />
       <IconButton
         aria-label="Input-image"
