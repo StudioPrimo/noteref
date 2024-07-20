@@ -62,3 +62,30 @@ func bindFileJSON(file *model.File) filebody {
 		UserID: file.UserID,
 	}
 }
+
+func (fh *FileHandler) CreateMany(ctx *gin.Context) {
+	var files []*model.File
+	if err := ctx.BindJSON(&files); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	resfiles, err := fh.uc.CreateMany(ctx, files)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	var jsonresfiles []filebody
+	for _, file := range resfiles {
+		jsonresfiles = append(jsonresfiles, bindFileJSON(file))
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"files": jsonresfiles,
+	})
+}

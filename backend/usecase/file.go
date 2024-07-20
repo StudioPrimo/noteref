@@ -19,6 +19,7 @@ type IFileUsecase interface {
 	Create(ctx context.Context, file *model.File) (*model.File, error)
 	Delete(ctx context.Context, id string) error
 	GetByID(ctx context.Context, id string) (*model.File, error)
+	CreateMany(ctx context.Context, files []*model.File) ([]*model.File, error)
 }
 
 func NewFileUsecase(repo repository.IFileRepository) IFileUsecase {
@@ -47,4 +48,9 @@ func (fu *FileUsecase) Delete(ctx context.Context, id string) error {
 func (fu *FileUsecase) GetByID(ctx context.Context, id string) (*model.File, error) {
 	resfile, err := fu.repo.GetByID(ctx, id)
 	return resfile, err
+}
+
+func (fu *FileUsecase) CreateMany(ctx context.Context, files []*model.File) ([]*model.File, error) {
+	resfiles, err := fu.repo.CreateMany(ctx, files)
+	return resfiles, err
 }

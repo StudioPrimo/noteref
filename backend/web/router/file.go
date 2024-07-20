@@ -16,4 +16,5 @@ func (r Router) InitFileRouter(conn *database.Conn) {
 
 	g := r.Engine.Group("/file")
 	g.POST("/", h.Create)
+	g.POST("/many", h.CreateMany)
 }

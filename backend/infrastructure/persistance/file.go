@@ -40,3 +40,10 @@ func (f *FilePersistance) GetByID(ctx context.Context, id string) (*model.File, 
 	return file, nil
 
 }
+
+func (f *FilePersistance) CreateMany(ctx context.Context, files []*model.File) ([]*model.File, error) {
+	if _, err := f.Conn.DB.NewInsert().Model(&files).Exec(ctx); err != nil {
+		return nil, err
+	}
+	return files, nil
+}
