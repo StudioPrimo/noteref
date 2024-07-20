@@ -7,6 +7,7 @@ import { fonts } from './fonts';
 import { Grid, GridItem } from '@chakra-ui/react';
 import Header from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
+import ListFiles from '@/components/features/GetFileList';
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] });
@@ -44,7 +45,7 @@ export default function RootLayout({
                 <Header />
               </GridItem>
               <GridItem pl="2" bg="pink.300" area={'nav'}>
-                Nav
+                <ListFiles />
               </GridItem>
               <GridItem pl="2" bg="green.300" area={'main'} overflowY={'auto'}>
                 {children}

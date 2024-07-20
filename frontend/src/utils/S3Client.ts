@@ -1,4 +1,9 @@
-import { S3Client } from '@aws-sdk/client-s3';
+import {
+  GetObjectCommand,
+  ListObjectsV2Command,
+  ListObjectsV2CommandInput,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { Config } from './Config';
 
@@ -33,5 +38,50 @@ export class S3 {
       .catch((e) => {
         console.log('Error uploading', e);
       });
+  }
+  async getListFilesName() {
+    let isTruncated = true;
+    const commandInput: ListObjectsV2CommandInput = {
+      Bucket: this.bucketName,
+    };
+
+    let content = '';
+
+    while (isTruncated) {
+      const command = new ListObjectsV2Command(commandInput);
+
+      const data = await this.client.send(command);
+      const contentList = (data.Contents || [])
+        .map((c) => `${c.Key}`)
+        .join('\n');
+      content += contentList + '\n';
+
+      isTruncated = data.IsTruncated ?? false;
+      commandInput.ContinuationToken = data.NextContinuationToken;
+      console.log('get file list');
+    }
+
+    if (content == null) {
+      console.log('No file list found');
+      return;
+    }
+
+    console.log(content);
+    return content;
+  }
+  async getFile(path: string) {
+    const command = new GetObjectCommand({
+      Bucket: this.bucketName,
+      Key: path,
+    });
+
+    const response = await this.client.send(command);
+
+    if (!response.Body) {
+      console.log('No file found');
+      return;
+    }
+    const str = await response.Body.transformToByteArray();
+    return new File([str], 'test', { type: 'application/pdf' });
   }
 }

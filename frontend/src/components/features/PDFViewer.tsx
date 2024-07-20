@@ -27,7 +27,7 @@ const maxWidth = 800;
 type PDFFile = string | File | null;
 
 type PDFViewerProps = {
-  fileUrl: string;
+  fileUrl: string | File | null;
 };
 
 export default function PDFViewer({ fileUrl }: PDFViewerProps) {
