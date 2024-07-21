@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, ChangeEvent } from 'react';
-import { Center, Flex, Image, Link, Text, Input } from '@chakra-ui/react';
+import { Center, Flex, Image, Link, Text, Input, Box } from '@chakra-ui/react';
 
 export default function Header() {
   const pages = ['home', 'about', 'upload'];
@@ -12,47 +12,44 @@ export default function Header() {
   };
 
   return (
-    <>
-      <Flex direction={'row'} gap={5} justify={'space-around'}>
+    <Flex align="center" justify="space-between" gap="4" w="full" pr={4}>
+      <Flex align="center" gap="4">
         <Image
           src="icon.svg"
           alt="icon"
-          boxSize={'80px'}
+          boxSize="80px"
           borderRadius="full"
-          mt={2}
+          mt={1.5}
         />
         <Center>
-          <Text fontSize="3xl" as="i">
-            note refugee
-          </Text>
+          <Text fontSize="3xl">NoteRef</Text>
         </Center>
-        <Center>
-          {pages.map((page) => {
-            if (page === 'home') {
-              return (
-                <Link key={page} href="/" pr={2}>
-                  <Text fontSize="xl" as="i" _hover={{ cursor: 'pointer' }}>
-                    {page}
-                  </Text>
-                </Link>
-              );
-            }
+      </Flex>
+      <Flex align="center" gap="4">
+        {pages.map((page) => {
+          if (page === 'home') {
             return (
-              <Link key={page} href={`/${page}`} pr={2}>
-                <Text fontSize="xl" as="i" _hover={{ cursor: 'pointer' }}>
+              <Link key={page} href="/" pr={2}>
+                <Text fontSize="xl" _hover={{ cursor: 'pointer' }}>
                   {page}
                 </Text>
               </Link>
             );
-          })}
-          <Input
-            placeholder="Search pages"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            ml={4}
-          />
-        </Center>
+          }
+          return (
+            <Link key={page} href={`/${page}`} pr={2}>
+              <Text fontSize="xl" _hover={{ cursor: 'pointer' }}>
+                {page}
+              </Text>
+            </Link>
+          );
+        })}
+        <Input
+          placeholder="Search pages"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </Flex>
-    </>
+    </Flex>
   );
 }

@@ -33,7 +33,7 @@ export default function RootLayout({
             <Grid
               gridTemplateAreas={`"header header"
                   "nav main"
-                  "nav footer"`}
+                  "footer footer"`}
               gridTemplateRows={'10vh 1fr 5vh'}
               gridTemplateColumns={'20vh 1fr'}
               gap="1"
@@ -41,16 +41,21 @@ export default function RootLayout({
               fontWeight="bold"
               height={'100vh'}
             >
-              <GridItem pl="2" bg="orange.300" area={'header'}>
+              <GridItem pl="2" bg="orange.200" area={'header'}>
                 <Header />
               </GridItem>
-              <GridItem pl="2" bg="pink.300" area={'nav'}>
+              <GridItem pl="2" area={'nav'}>
                 <ListFiles />
               </GridItem>
-              <GridItem pl="2" bg="green.300" area={'main'} overflowY={'auto'}>
+              <GridItem pl="2" area={'main'} overflowY={'auto'}>
                 {children}
               </GridItem>
-              <GridItem pl="2" bg="blue.300" area={'footer'}>
+              <GridItem
+                pl="2"
+                area={'footer'}
+                borderTop="1px solid "
+                className="border-grey-100"
+              >
                 <Footer />
               </GridItem>
             </Grid>
